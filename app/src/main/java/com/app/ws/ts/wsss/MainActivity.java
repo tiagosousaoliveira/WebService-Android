@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.app.ws.ts.wsss.Model.Date;
 import com.app.ws.ts.wsss.Model.Endereco;
 import com.app.ws.ts.wsss.Model.Usuario;
 import com.app.ws.ts.wsss.WS.IServ;
@@ -26,34 +27,39 @@ public class MainActivity extends AppCompatActivity {
 
         Button bnt_zipcod = findViewById(R.id.WS_1);
 
-        bnt_git.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IService iService = IService.retrofit.create(IService.class);
-                final Call<Endereco> call = iService.getCep("60832160");  //Complemento da URL
-                call.enqueue(new Callback<Endereco>() {
-                    @Override
-                    public void onResponse(Call<Endereco> call, Response<Endereco> response) {
-                        int code = response.code();
-                        if (code == 200) {
-                            Endereco login = response.body();
-                            try {
-                                Toast.makeText(getBaseContext(), "Nome do usuário: " + login.getStreet().toString(), Toast.LENGTH_LONG).show();
-                            }catch (Exception e){
-                                e.getMessage();
-                            }
-                        } else {
-                            Toast.makeText(getBaseContext(), "Falha: " + String.valueOf(code), Toast.LENGTH_LONG).show();
-                        }
-                    }
+            bnt_git.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                    @Override
-                    public void onFailure(Call<Endereco> call, Throwable t) {
-                        Toast.makeText(getBaseContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        });
+                    IService iService = IService.retrofit.create(IService.class);
+                    final Call<Date> call = iService.getCep("60832160");  //Complemento da URL
+                    call.enqueue(new Callback<Date>() {
+                        @Override
+                        public void onResponse(Call<Date> call, Response<Date> response) {
+                            int code = response.code();
+                            if (code == 200) {
+                                Date login = response.body();
+                                try {
+                                    Endereco end = new Endereco();
+                                    end.setCity(login.getData().);
+
+                                    
+                                    Toast.makeText(getBaseContext(), "Nome do usuário: " + login.getData(), Toast.LENGTH_LONG).show();
+                                } catch (Exception e) {
+                                    e.getMessage();
+                                }
+                            } else {
+                                Toast.makeText(getBaseContext(), "Falha: " + String.valueOf(code), Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Date> call, Throwable t) {
+                            Toast.makeText(getBaseContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            });
 
         bnt_zipcod.setOnClickListener(new View.OnClickListener() {
             @Override

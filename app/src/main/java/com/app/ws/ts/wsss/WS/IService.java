@@ -1,7 +1,7 @@
 package com.app.ws.ts.wsss.WS;
 
 
-import com.app.ws.ts.wsss.Model.Endereco;
+import com.app.ws.ts.wsss.Model.Date;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -12,7 +12,7 @@ import retrofit2.http.Path;
 public interface IService {
 
     @GET("/addresses/zipcode/{cep}")
-    Call<Endereco> getCep(@Path("cep") String cep);
+    Call<Date> getCep(@Path("cep") String cep);
 
 
 

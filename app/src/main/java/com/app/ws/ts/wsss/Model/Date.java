@@ -3,8 +3,53 @@ package com.app.ws.ts.wsss.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Endereco {
+public class Date{
 
+    public Data data;
+
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
+    }
+}
+
+class Data {
+
+    @SerializedName("id")
+    public  int     id;
+    @SerializedName("type")
+    public  String type;
+    @SerializedName("attributes")
+    public attributes atrib;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public attributes getAtrib() {
+        return atrib;
+    }
+
+    public void setAtrib(attributes atrib) {
+        this.atrib = atrib;
+    }
+}
+class attributes{
     @SerializedName("street")
     public String street;
     @SerializedName("neighborhood")
@@ -65,6 +110,4 @@ public class Endereco {
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
     }
-
-
 }
