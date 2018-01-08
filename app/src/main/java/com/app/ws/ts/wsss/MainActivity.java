@@ -6,11 +6,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.app.ws.ts.wsss.Model.Date;
+import com.app.ws.ts.wsss.Model.Dat;
 import com.app.ws.ts.wsss.Model.Endereco;
 import com.app.ws.ts.wsss.Model.Usuario;
 import com.app.ws.ts.wsss.WS.IServ;
 import com.app.ws.ts.wsss.WS.IService;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,21 +31,17 @@ public class MainActivity extends AppCompatActivity {
             bnt_git.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     IService iService = IService.retrofit.create(IService.class);
-                    final Call<Date> call = iService.getCep("60832160");  //Complemento da URL
-                    call.enqueue(new Callback<Date>() {
+                    final Call<Dat> call = iService.getCep("60832160");  //Complemento da URL
+                    call.enqueue(new Callback<Dat>() {
                         @Override
-                        public void onResponse(Call<Date> call, Response<Date> response) {
+                        public void onResponse(Call<Dat> call, Response<Dat> response) {
                             int code = response.code();
                             if (code == 200) {
-                                Date login = response.body();
+                                Dat login = response.body();
                                 try {
-                                    Endereco end = new Endereco();
-                                    end.setCity(login.getData().);
-
-                                    
-                                    Toast.makeText(getBaseContext(), "Nome do usuário: " + login.getData(), Toast.LENGTH_LONG).show();
+                                    Mapeamento(login);
+                                    Toast.makeText(getBaseContext(), "Nome do usuário: " + login.getData().getAttributes().getCity()  , Toast.LENGTH_LONG).show();
                                 } catch (Exception e) {
                                     e.getMessage();
                                 }
@@ -54,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onFailure(Call<Date> call, Throwable t) {
+                        public void onFailure(Call<Dat> call, Throwable t) {
                             Toast.makeText(getBaseContext(), t.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     });
@@ -89,5 +86,15 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+
+
+    }
+    public void Mapeamento(Dat dat){
+        Endereco v = new Endereco();
+        v.setCity(dat.getData().getAttributes().getCity());
+        v.setState(dat.getData().getAttributes().getState());
+
     }
 }
+
+
